@@ -49,6 +49,19 @@ public class BookingController {
         }
     }
 
+    public Lesson findLesson(int month, int week, String day, String time, String exerciseType) {
+        for (Lesson l : lessons) {
+            if (l.getMonth() == month &&
+                    l.getWeekend() == week &&
+                    l.getDay().equalsIgnoreCase(day) &&
+                    l.getTime().equalsIgnoreCase(time) &&
+                    l.getExerciseType().equalsIgnoreCase(exerciseType)) {
+                return l;
+            }
+        }
+        return null;
+    }
+
     public Lesson getLessonById(String id) {
         for (Lesson l : lessons) {
             if (l.getId().equals(id)) {

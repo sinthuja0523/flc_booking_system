@@ -8,8 +8,15 @@ public class Style {
     private static final Color HOVER = new Color(41, 128, 185);
     private static final Font FONT = new Font("SansSerif", Font.PLAIN, 13);
 
+    // default style
     public static void changeButtonStyle(JButton btn) {
-        btn.setBackground(PRIMARY);
+        changeButtonStyle(btn, PRIMARY, HOVER);
+    }
+
+    // custom style
+    public static void changeButtonStyle(JButton btn, Color bg, Color hover) {
+
+        btn.setBackground(bg);
         btn.setForeground(Color.WHITE);
         btn.setFont(FONT);
 
@@ -22,11 +29,11 @@ public class Style {
 
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn.setBackground(HOVER);
+                btn.setBackground(hover);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn.setBackground(PRIMARY);
+                btn.setBackground(bg);
             }
         });
     }

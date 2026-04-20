@@ -129,7 +129,7 @@ public class BookLessonPanel extends JPanel {
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btn_book_lesson = new JButton("Book Selected Lesson");
-        Style.changeButtonStyle(btn_book_lesson);
+        Style.changeButtonStyle(btn_book_lesson, new Color(46, 204, 113), new Color(39, 174, 96));
 
         btn_book_lesson.addActionListener(e -> {
             int row = timetableTable.getSelectedRow();
