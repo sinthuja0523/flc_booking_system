@@ -1,4 +1,4 @@
-package flc.models;
+package resources.Models;
 
 public class Booking {
     private String bookingId;
