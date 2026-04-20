@@ -16,7 +16,7 @@ public class Layout extends JFrame {
     public Layout(BookingController system) {
         getContentPane().setBackground(BG);
         setTitle("Furzefield Leisure Centre (FLC) Booking System");
-        setSize(1024, 768);
+        setSize(1200, 768);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 

@@ -5,6 +5,7 @@ import resources.Models.*;
 import resources.Views.Components.Style;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
@@ -56,7 +57,6 @@ public class BookLessonPanel extends JPanel {
             day_selection.addItem("Zumba");
             day_selection.addItem("Aquacise");
             day_selection.addItem("Box Fit");
-            day_selection.addItem("Body Blitz");
         });
 
         JButton search_button = new JButton("Search Lessons");
@@ -69,7 +69,10 @@ public class BookLessonPanel extends JPanel {
         filterPanel.add(day_selection);
         filterPanel.add(search_button);
 
-        String[] columns = { "ID", "Type", "Month", "Weekend", "Day", "Time", "Price", "Capacity", "Status" };
+        // String[] columns = {"ID", "Exercise", "Day", "Time", "Price",
+        // "Availability"};
+        String[] columns = { "ID", "Exercise", "Schedule", "Time", "Price", "Availability" };
+
         timetableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -79,6 +82,48 @@ public class BookLessonPanel extends JPanel {
 
         timetableTable = new JTable(timetableModel);
         JScrollPane scrollPane = new JScrollPane(timetableTable);
+
+        timetableTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus,
+                    int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(
+                        table, value, isSelected, hasFocus, row, column);
+
+                // Get lesson ID from table
+                String lessonId = (String) table.getValueAt(row, 0);
+
+                // Find lesson object
+                Lesson lesson = system.getLessonById(lessonId);
+
+                if (lesson != null) {
+                    int week = lesson.getWeekend(); // week number (1–4)
+
+                    if (!isSelected) {
+                        switch (week) {
+                            case 1:
+                                c.setBackground(new Color(220, 235, 255)); // light blue
+                                break;
+                            case 2:
+                                c.setBackground(new Color(220, 255, 220)); // light green
+                                break;
+                            case 3:
+                                c.setBackground(new Color(255, 255, 200)); // light yellow
+                                break;
+                            case 4:
+                                c.setBackground(new Color(255, 220, 230)); // light pink
+                                break;
+                            default:
+                                c.setBackground(Color.WHITE);
+                        }
+                    }
+                }
+
+                return c;
+            }
+        });
 
         search_button.addActionListener(e -> refreshLessonTable());
 
@@ -131,10 +176,26 @@ public class BookLessonPanel extends JPanel {
         }
 
         for (Lesson l : lessons) {
-            String status = l.getCurrentAttendeesCount() + "/" + l.getCapacity();
+            int booked = l.getCurrentAttendeesCount();
+            int capacity = l.getCapacity();
+
+            String status;
+
+            if (booked == capacity) {
+                status = "Full";
+            } else {
+                status = (capacity - booked) + " spots left";
+            }
+            String[] months = { "Jan", "Feb", "Mar" };
+            String schedule = months[l.getMonth() - 1] + " Week " + l.getWeekend();
+
             timetableModel.addRow(new Object[] {
-                    l.getId(), l.getExerciseType(), l.getMonth(), l.getWeekend(),
-                    l.getDay(), l.getTime(), l.getPrice(), l.getCapacity(), status
+                    l.getId(),
+                    l.getExerciseType(),
+                    schedule,
+                    l.getTime(),
+                    "£" + l.getPrice(),
+                    status
             });
         }
     }

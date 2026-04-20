@@ -27,10 +27,11 @@ public class BookingController {
         double[] prices = { 15.0, 12.0, 18.0, 10.0 };
         String[] days = { "Saturday", "Sunday" };
         String[] times = { "Morning", "Afternoon", "Evening" };
+        String[] months = { "January", "February", "March" };
 
         int lessonIdCounter = 1;
 
-        for (int month = 1; month <= 2; month++) {
+        for (int month = 0; month < months.length; month++) {
             for (int weekend = 1; weekend <= 4; weekend++) {
                 for (String day : days) {
                     for (int t = 0; t < times.length; t++) {
@@ -40,12 +41,21 @@ public class BookingController {
                         double price = prices[index % 4];
 
                         String id = "L" + String.format("%03d", lessonIdCounter++);
-                        Lesson lesson = new Lesson(id, type, month, weekend, day, time, price);
+                        Lesson lesson = new Lesson(id, type, month + 1, weekend, day, time, price);
                         lessons.add(lesson);
                     }
                 }
             }
         }
+    }
+
+    public Lesson getLessonById(String id) {
+        for (Lesson l : lessons) {
+            if (l.getId().equals(id)) {
+                return l;
+            }
+        }
+        return null;
     }
 
     public void addMember(Member member) {
