@@ -29,19 +29,47 @@ public class Lesson {
     }
 
     // Getters
-    public String getId() { return id; }
-    public String getExerciseType() { return exerciseType; }
-    public int getMonth() { return month; }
-    public int getWeekend() { return weekend; }
-    public String getDay() { return day; }
-    public String getTime() { return time; }
-    public double getPrice() { return price; }
-    public int getCapacity() { return capacity; }
-    
+    public String getId() {
+        return id;
+    }
+
+    public String getExerciseType() {
+        return exerciseType;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getWeekend() {
+        return weekend;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
     // Status
-    public int getCurrentAttendeesCount() { return attendees.size(); }
-    public boolean hasSpace() { return attendees.size() < capacity; }
-    
+    public int getCurrentAttendeesCount() {
+        return attendees.size();
+    }
+
+    public boolean hasSpace() {
+        return attendees.size() < capacity;
+    }
+
     // Operations
     public boolean addAttendee(Member member) {
         if (hasSpace() && !attendees.contains(member)) {
@@ -50,30 +78,37 @@ public class Lesson {
         }
         return false;
     }
-    
+
     public boolean removeAttendee(Member member) {
         return attendees.remove(member);
     }
-    
+
     public void addReview(Review review) {
         if (review != null) {
             reviews.add(review);
         }
     }
-    
+
     public double getAverageRating() {
-        if (reviews.isEmpty()) return 0.0;
+        if (reviews.isEmpty())
+            return 0.0;
         double sum = 0;
-        for (Review r : reviews) sum += r.getRating();
+        for (Review r : reviews)
+            sum += r.getRating();
         return sum / reviews.size();
     }
-    
+
     public List<Member> getAttendees() {
         return new ArrayList<>(attendees);
     }
-    
+
     @Override
     public String toString() {
-        return id + ": " + exerciseType + " (" + day + " " + time + ") - $" + String.format("%.2f", price) + " [" + attendees.size() + "/" + capacity + "]";
+        return id + ": " + exerciseType + " (" + day + " " + time + ") - $" + String.format("%.2f", price) + " ["
+                + attendees.size() + "/" + capacity + "]";
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

@@ -14,6 +14,9 @@ public class BookLessonPanel extends JPanel {
     private JFrame parent;
     private DefaultTableModel timetableModel;
     private JTable timetableTable;
+    private JRadioButton radbtn_day;
+    private JRadioButton radbtn_type;
+    private JComboBox<String> day_selection;
 
     public BookLessonPanel(BookingController system, JFrame parent) {
         this.system = system;
@@ -32,15 +35,14 @@ public class BookLessonPanel extends JPanel {
             memberCombo.addItem(m);
         }
 
-        JRadioButton radbtn_day = new JRadioButton("Filter by Day");
-        JRadioButton radbtn_type = new JRadioButton("Filter by Type");
+        radbtn_day = new JRadioButton("Filter by Day");
+        radbtn_type = new JRadioButton("Filter by Type");
+        day_selection = new JComboBox<>(new String[] { "Saturday", "Sunday" });
 
         ButtonGroup bg = new ButtonGroup();
         bg.add(radbtn_day);
         bg.add(radbtn_type);
         radbtn_day.setSelected(true);
-
-        JComboBox<String> day_selection = new JComboBox<>(new String[] { "Saturday", "Sunday" });
 
         radbtn_day.addActionListener(e -> {
             day_selection.removeAllItems();
@@ -78,25 +80,7 @@ public class BookLessonPanel extends JPanel {
         timetableTable = new JTable(timetableModel);
         JScrollPane scrollPane = new JScrollPane(timetableTable);
 
-        search_button.addActionListener(e -> {
-            timetableModel.setRowCount(0);
-            String criteria = (String) day_selection.getSelectedItem();
-            List<Lesson> lessons;
-
-            if (radbtn_day.isSelected()) {
-                lessons = system.getLessonsByDay(criteria);
-            } else {
-                lessons = system.getLessonsByType(criteria);
-            }
-
-            for (Lesson l : lessons) {
-                String status = l.getCurrentAttendeesCount() + "/" + l.getCapacity();
-                timetableModel.addRow(new Object[] {
-                        l.getId(), l.getExerciseType(), l.getMonth(), l.getWeekend(),
-                        l.getDay(), l.getTime(), l.getPrice(), l.getCapacity(), status
-                });
-            }
-        });
+        search_button.addActionListener(e -> refreshLessonTable());
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btn_book_lesson = new JButton("Book Selected Lesson");
@@ -128,5 +112,30 @@ public class BookLessonPanel extends JPanel {
         add(filterPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
+    }
+
+    public void refreshLessonTable() {
+        timetableModel.setRowCount(0);
+
+        String criteria = (String) day_selection.getSelectedItem();
+        List<Lesson> lessons;
+
+        if (criteria == null) {
+            return;
+        }
+
+        if (radbtn_day.isSelected()) {
+            lessons = system.getLessonsByDay(criteria);
+        } else {
+            lessons = system.getLessonsByType(criteria);
+        }
+
+        for (Lesson l : lessons) {
+            String status = l.getCurrentAttendeesCount() + "/" + l.getCapacity();
+            timetableModel.addRow(new Object[] {
+                    l.getId(), l.getExerciseType(), l.getMonth(), l.getWeekend(),
+                    l.getDay(), l.getTime(), l.getPrice(), l.getCapacity(), status
+            });
+        }
     }
 }

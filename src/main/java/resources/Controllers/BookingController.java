@@ -233,4 +233,46 @@ public class BookingController {
     public List<Booking> getAllBookings() {
         return new ArrayList<>(bookings.values());
     }
+
+    public List<String> getAllExerciseTypes() {
+        List<String> types = new ArrayList<>();
+
+        for (Lesson lesson : lessons) {
+            if (!types.contains(lesson.getExerciseType())) {
+                types.add(lesson.getExerciseType());
+            }
+        }
+
+        return types;
+    }
+
+    public double getPriceByExerciseType(String exerciseType) {
+        for (Lesson lesson : lessons) {
+            if (lesson.getExerciseType().equalsIgnoreCase(exerciseType)) {
+                return lesson.getPrice();
+            }
+        }
+        return 0.0;
+    }
+
+    public String updatePriceByExerciseType(String exerciseType, double newPrice) {
+        if (newPrice <= 0) {
+            return "Error: Price must be greater than 0.";
+        }
+
+        boolean updated = false;
+
+        for (Lesson lesson : lessons) {
+            if (lesson.getExerciseType().equalsIgnoreCase(exerciseType)) {
+                lesson.setPrice(newPrice);
+                updated = true;
+            }
+        }
+
+        if (updated) {
+            return "Success: Price updated for " + exerciseType;
+        }
+
+        return "Error: Exercise type not found.";
+    }
 }
