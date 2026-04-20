@@ -57,7 +57,7 @@ public class BookLessonPanel extends JPanel {
             day_selection.addItem("Body Blitz");
         });
 
-        JButton search_button = new JButton("Search");
+        JButton search_button = new JButton("Search Lessons");
         Style.changeButtonStyle(search_button);
 
         filterPanel.add(new JLabel("Member:"));
