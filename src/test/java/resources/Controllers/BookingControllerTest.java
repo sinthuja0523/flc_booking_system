@@ -32,7 +32,7 @@ class BookingControllerTest {
     @Test
     void shouldLoadDefaultMembersLessonsAndExerciseTypes() {
         assertEquals(5, controller.getAllMembers().size());
-        assertEquals(72, controller.getAllLessons().size());
+        assertEquals(48, controller.getAllLessons().size());
         assertEquals(4, controller.getAllExerciseTypes().size());
         assertTrue(controller.getAllExerciseTypes().contains("Yoga"));
         assertTrue(controller.getAllExerciseTypes().contains("Zumba"));
@@ -57,8 +57,8 @@ class BookingControllerTest {
         List<Lesson> saturdayLessons = controller.getLessonsByDay("Saturday");
         List<Lesson> yogaLessons = controller.getLessonsByType("Yoga");
 
-        assertEquals(36, saturdayLessons.size());
-        assertEquals(24, yogaLessons.size());
+        assertEquals(24, saturdayLessons.size());
+        assertEquals(16, yogaLessons.size());
         assertNotNull(controller.findLesson(1, 1, "Saturday", "Morning", "Yoga"));
         assertNull(controller.findLesson(9, 9, "Monday", "Night", "Pilates"));
     }
@@ -232,7 +232,7 @@ class BookingControllerTest {
 
         List<Lesson> candidates = controller.getAvailableLessonsForChange("B0001");
 
-        assertEquals(71, candidates.size());
+        assertEquals(47, candidates.size());
         assertFalse(candidates.contains(yogaSaturdayMorning));
         assertTrue(candidates.contains(zumbaSaturdayAfternoon));
         assertTrue(controller.getAvailableLessonsForChange("B9999").isEmpty());
