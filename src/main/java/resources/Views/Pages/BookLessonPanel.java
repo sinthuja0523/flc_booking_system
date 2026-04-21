@@ -61,6 +61,7 @@ public class BookLessonPanel extends JPanel {
 
         JButton search_button = new JButton("Search Lessons");
         Style.changeButtonStyle(search_button);
+        search_button.setPreferredSize(new Dimension(140, 35));
 
         filterPanel.add(new JLabel("Member:"));
         filterPanel.add(memberCombo);
@@ -130,6 +131,7 @@ public class BookLessonPanel extends JPanel {
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btn_book_lesson = new JButton("Book Selected Lesson");
         Style.changeButtonStyle(btn_book_lesson, new Color(46, 204, 113), new Color(39, 174, 96));
+        btn_book_lesson.setPreferredSize(new Dimension(240, 35));
 
         btn_book_lesson.addActionListener(e -> {
             int row = timetableTable.getSelectedRow();

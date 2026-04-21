@@ -32,7 +32,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>flc.Main</mainClass>
+                            <mainClass>resources.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -49,6 +49,23 @@ public class BookingController {
         }
     }
 
+    public List<Lesson> getAvailableLessonsForChange(String bookingId) {
+        Booking booking = bookings.get(bookingId);
+        List<Lesson> result = new ArrayList<>();
+
+        if (booking == null) {
+            return result;
+        }
+
+        for (Lesson l : lessons) {
+            if (!l.getId().equals(booking.getLesson().getId())) {
+                result.add(l);
+            }
+        }
+
+        return result;
+    }
+
     public Lesson findLesson(int month, int week, String day, String time, String exerciseType) {
         for (Lesson l : lessons) {
             if (l.getMonth() == month &&
