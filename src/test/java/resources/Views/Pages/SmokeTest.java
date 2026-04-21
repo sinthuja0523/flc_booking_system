@@ -1,7 +1,13 @@
-package resources.Views.Pages;
+package resources.views.Pages;
 
 import org.junit.jupiter.api.Test;
-import resources.Controllers.BookingController;
+
+import resources.controllers.BookingController;
+import resources.views.Pages.AttendLessonPanel;
+import resources.views.Pages.BookLessonPanel;
+import resources.views.Pages.ManageBookingPanel;
+import resources.views.Pages.ReportsPanel;
+import resources.views.Pages.SettingsPanel;
 
 import static org.junit.jupiter.api.Assertions.*;
 

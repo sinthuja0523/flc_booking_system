@@ -1,7 +1,7 @@
-package resources.Views.Pages;
+package resources.views.Pages;
 
-import resources.Controllers.BookingController;
-import resources.Views.Components.Style;
+import resources.controllers.BookingController;
+import resources.views.components.Style;
 
 import javax.swing.*;
 import java.awt.*;

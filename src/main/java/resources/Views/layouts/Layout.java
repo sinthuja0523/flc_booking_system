@@ -1,11 +1,11 @@
-package resources.Views.Layout;
+package resources.views.layouts;
 
-import resources.Controllers.BookingController;
-import resources.Views.Pages.AttendLessonPanel;
-import resources.Views.Pages.BookLessonPanel;
-import resources.Views.Pages.ManageBookingPanel;
-import resources.Views.Pages.ReportsPanel;
-import resources.Views.Pages.SettingsPanel;
+import resources.controllers.BookingController;
+import resources.views.Pages.AttendLessonPanel;
+import resources.views.Pages.BookLessonPanel;
+import resources.views.Pages.ManageBookingPanel;
+import resources.views.Pages.ReportsPanel;
+import resources.views.Pages.SettingsPanel;
 
 import javax.swing.*;
 import java.awt.*;

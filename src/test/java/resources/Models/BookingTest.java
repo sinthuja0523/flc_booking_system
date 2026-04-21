@@ -1,6 +1,11 @@
-package resources.Models;
+package resources.models;
 
 import org.junit.jupiter.api.Test;
+
+import resources.models.Booking;
+import resources.models.BookingStatus;
+import resources.models.Lesson;
+import resources.models.Member;
 
 import static org.junit.jupiter.api.Assertions.*;
 

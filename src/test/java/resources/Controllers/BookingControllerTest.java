@@ -1,9 +1,10 @@
-package resources.Controllers;
+package resources.controllers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import resources.Models.*;
+import resources.controllers.BookingController;
+import resources.models.*;
 
 import java.util.List;
 

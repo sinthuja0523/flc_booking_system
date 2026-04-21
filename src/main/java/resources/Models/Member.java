@@ -1,4 +1,4 @@
-package resources.Models;
+package resources.models;
 
 import java.util.Objects;
 

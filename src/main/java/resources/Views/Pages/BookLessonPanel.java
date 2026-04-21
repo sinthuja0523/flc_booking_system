@@ -1,8 +1,8 @@
-package resources.Views.Pages;
+package resources.views.Pages;
 
-import resources.Controllers.BookingController;
-import resources.Models.*;
-import resources.Views.Components.Style;
+import resources.controllers.BookingController;
+import resources.models.*;
+import resources.views.components.Style;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -56,7 +56,7 @@ public class BookLessonPanel extends JPanel {
             day_selection.addItem("Yoga");
             day_selection.addItem("Zumba");
             day_selection.addItem("Aquacise");
-            day_selection.addItem("Box Fit");
+            day_selection.addItem("BoxFit");
         });
 
         JButton search_button = new JButton("Search Lessons");

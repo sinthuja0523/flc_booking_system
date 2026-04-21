@@ -2,8 +2,8 @@ package resources;
 
 import javax.swing.SwingUtilities;
 
-import resources.Controllers.BookingController;
-import resources.Views.Layout.Layout;
+import resources.controllers.BookingController;
+import resources.views.layouts.Layout;
 
 public class Main {
     public static void main(String[] args) {

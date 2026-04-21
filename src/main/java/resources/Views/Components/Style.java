@@ -1,4 +1,4 @@
-package resources.Views.Components;
+package resources.views.components;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,10 +1,10 @@
-package resources.Views.Pages;
+package resources.views.Pages;
 
-import resources.Controllers.BookingController;
-import resources.Models.Booking;
-import resources.Models.Lesson;
-import resources.Models.Member;
-import resources.Views.Components.Style;
+import resources.controllers.BookingController;
+import resources.models.Booking;
+import resources.models.Lesson;
+import resources.models.Member;
+import resources.views.components.Style;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -31,7 +31,7 @@ public class ManageBookingPanel extends JPanel {
     }
 
     private void initializeUI() {
-        String[] monthNames = {"January", "February", "March"};
+        String[] monthNames = {"January", "February"};
 
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 

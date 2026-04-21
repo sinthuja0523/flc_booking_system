@@ -1,4 +1,4 @@
-package resources.Models;
+package resources.models;
 
 public class Booking {
     private String bookingId;

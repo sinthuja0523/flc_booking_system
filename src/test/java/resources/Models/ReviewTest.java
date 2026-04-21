@@ -1,6 +1,8 @@
-package resources.Models;
+package resources.models;
 
 import org.junit.jupiter.api.Test;
+
+import resources.models.Review;
 
 import static org.junit.jupiter.api.Assertions.*;
 

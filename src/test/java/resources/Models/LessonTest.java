@@ -1,6 +1,10 @@
-package resources.Models;
+package resources.models;
 
 import org.junit.jupiter.api.Test;
+
+import resources.models.Lesson;
+import resources.models.Member;
+import resources.models.Review;
 
 import java.util.List;
 

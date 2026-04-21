@@ -1,7 +1,8 @@
-package resources.Controllers;
+package resources.controllers;
 
-import resources.Models.*;
 import java.util.*;
+
+import resources.models.*;
 
 public class BookingController {
     private Map<String, Member> members;
@@ -27,7 +28,7 @@ public class BookingController {
         double[] prices = { 15.0, 12.0, 18.0, 10.0 };
         String[] days = { "Saturday", "Sunday" };
         String[] times = { "Morning", "Afternoon", "Evening" };
-        String[] months = { "January", "February", "March" };
+        String[] months = { "January", "February" };
 
         int lessonIdCounter = 1;
 
@@ -193,6 +194,9 @@ public class BookingController {
             return "Error: Booking not found.";
         if (booking.getStatus() == BookingStatus.CANCELLED || booking.getStatus() == BookingStatus.ATTENDED) {
             return "Error: Booking is cancelled or already attended.";
+        }
+        if (rating < 1 || rating > 5) {
+            return "Error: Rating must be between 1 and 5.";
         }
 
         booking.setStatus(BookingStatus.ATTENDED);
