@@ -242,7 +242,9 @@ public class BookingController {
     public String bookLesson(Member member, Lesson lesson) {
         for (Booking b : bookings.values()) {
             if (b.getMember().equals(member) && b.getLesson().equals(lesson) &&
-                    (b.getStatus() == BookingStatus.BOOKED || b.getStatus() == BookingStatus.CHANGED)) {
+                    (b.getStatus() == BookingStatus.BOOKED ||
+                            b.getStatus() == BookingStatus.CHANGED ||
+                            b.getStatus() == BookingStatus.ATTENDED)) {
                 return "Error: Duplicate booking detected.";
             }
         }
@@ -264,16 +266,22 @@ public class BookingController {
 
     public String changeBooking(String bookingId, Lesson newLesson) {
         Booking booking = bookings.get(bookingId);
+
         if (booking == null)
             return "Error: Booking not found.";
         if (booking.getStatus() == BookingStatus.CANCELLED || booking.getStatus() == BookingStatus.ATTENDED) {
             return "Error: Cannot change a cancelled or attended booking.";
         }
+        if (hasTimeConflict(booking.getMember(), newLesson, bookingId)) {
+            return "Error: Time conflict detected.";
+        }
 
         for (Booking b : bookings.values()) {
             if (!b.getBookingId().equals(bookingId) && b.getMember().equals(booking.getMember())
                     && b.getLesson().equals(newLesson) &&
-                    (b.getStatus() == BookingStatus.BOOKED || b.getStatus() == BookingStatus.CHANGED)) {
+                    (b.getStatus() == BookingStatus.BOOKED ||
+                            b.getStatus() == BookingStatus.CHANGED ||
+                            b.getStatus() == BookingStatus.ATTENDED)) {
                 return "Error: Duplicate booking detected in the new lesson.";
             }
         }
