@@ -11,11 +11,18 @@ public class BookingController {
     private int nextBookingId = 1;
 
     public BookingController() {
+        this(true);
+    }
+
+    public BookingController(boolean loadSampleData) {
         this.members = new HashMap<>();
         this.lessons = new ArrayList<>();
         this.bookings = new LinkedHashMap<>();
         initializeData();
-        initializeSampleBookingsAndReviews();
+
+        if (loadSampleData) {
+            initializeSampleBookingsAndReviews();
+        }
     }
 
     private void initializeData() {

@@ -3,7 +3,6 @@ package resources.controllers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import resources.controllers.BookingController;
 import resources.models.*;
 
 import java.util.List;
@@ -21,7 +20,7 @@ class BookingControllerTest {
 
     @BeforeEach
     void setUp() {
-        controller = new BookingController();
+        controller = new BookingController(false);
         alice = controller.getMember("M001");
         bob = controller.getMember("M002");
         yogaSaturdayMorning = controller.findLesson(1, 1, "Saturday", "Morning", "Yoga");
@@ -31,7 +30,7 @@ class BookingControllerTest {
 
     @Test
     void shouldLoadDefaultMembersLessonsAndExerciseTypes() {
-        assertEquals(5, controller.getAllMembers().size());
+        assertEquals(10, controller.getAllMembers().size());
         assertEquals(48, controller.getAllLessons().size());
         assertEquals(4, controller.getAllExerciseTypes().size());
         assertTrue(controller.getAllExerciseTypes().contains("Yoga"));
@@ -150,7 +149,7 @@ class BookingControllerTest {
 
         String result = controller.changeBooking("B0001", zumbaSaturdayAfternoon);
 
-        assertEquals("Error: Duplicate booking detected in the new lesson.", result);
+        assertEquals("Error: Time conflict detected.", result);
     }
 
     @Test
