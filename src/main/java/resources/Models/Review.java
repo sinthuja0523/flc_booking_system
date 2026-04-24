@@ -19,4 +19,10 @@ public class Review {
     public String getText() {
         return text;
     }
+
+
+
+public String getComment() {
+    return text;
+}
 }

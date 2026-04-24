@@ -8,12 +8,11 @@ public class Style {
     private static final Color HOVER = new Color(41, 128, 185);
     private static final Font FONT = new Font("SansSerif", Font.PLAIN, 13);
 
-    // default style
+    
     public static void changeButtonStyle(JButton btn) {
         changeButtonStyle(btn, PRIMARY, HOVER);
     }
 
-    // custom style
     public static void changeButtonStyle(JButton btn, Color bg, Color hover) {
 
         btn.setBackground(bg);

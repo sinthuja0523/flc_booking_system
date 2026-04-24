@@ -15,6 +15,7 @@ public class BookingController {
         this.lessons = new ArrayList<>();
         this.bookings = new LinkedHashMap<>();
         initializeData();
+        initializeSampleBookingsAndReviews();
     }
 
     private void initializeData() {
@@ -23,6 +24,11 @@ public class BookingController {
         addMember(new Member("M003", "Charlie"));
         addMember(new Member("M004", "Diana"));
         addMember(new Member("M005", "Eve"));
+        addMember(new Member("M006", "Frank"));
+        addMember(new Member("M007", "Grace"));
+        addMember(new Member("M008", "Henry"));
+        addMember(new Member("M009", "Ivy"));
+        addMember(new Member("M010", "Jack"));
 
         String[] types = { "Yoga", "Zumba", "Aquacise", "BoxFit" };
         double[] prices = { 15.0, 12.0, 18.0, 10.0 };
@@ -48,6 +54,110 @@ public class BookingController {
                 }
             }
         }
+    }
+
+    public String viewLessonReviews(String lessonId) {
+        Lesson lesson = getLessonById(lessonId);
+
+        if (lesson == null) {
+            return "Error: Lesson not found.";
+        }
+
+        List<Review> reviews = lesson.getReviews();
+
+        if (reviews.isEmpty()) {
+            return "No reviews available for this lesson.";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Reviews for Lesson ").append(lessonId).append(" (")
+                .append(lesson.getExerciseType()).append(")\n");
+        sb.append("--------------------------------------------------\n");
+
+        int count = 1;
+        for (Review review : reviews) {
+            sb.append("Review ").append(count++).append(":\n");
+            sb.append("Rating: ").append(review.getRating()).append("\n");
+            sb.append("Comment: ").append(review.getComment()).append("\n");
+            sb.append("--------------------------------------------------\n");
+        }
+
+        return sb.toString();
+    }
+
+    private void createAttendedSampleBooking(String memberId, String lessonId, int rating, String reviewText) {
+        Member member = getMember(memberId);
+        Lesson lesson = getLessonById(lessonId);
+
+        if (member == null || lesson == null) {
+            return;
+        }
+
+        String result = bookLesson(member, lesson);
+
+        if (result.startsWith("Success")) {
+            String bookingId = result.replace("Success: ", "").trim();
+            attendLesson(bookingId, rating, reviewText);
+        }
+    }
+
+    private boolean hasTimeConflict(Member member, Lesson newLesson, String ignoreBookingId) {
+        for (Booking booking : bookings.values()) {
+            if (ignoreBookingId != null && booking.getBookingId().equals(ignoreBookingId)) {
+                continue;
+            }
+
+            boolean activeBooking = booking.getStatus() == BookingStatus.BOOKED
+                    || booking.getStatus() == BookingStatus.CHANGED
+                    || booking.getStatus() == BookingStatus.ATTENDED;
+
+            if (!activeBooking) {
+                continue;
+            }
+
+            if (!booking.getMember().equals(member)) {
+                continue;
+            }
+
+            Lesson existingLesson = booking.getLesson();
+
+            boolean sameSlot = existingLesson.getMonth() == newLesson.getMonth()
+                    && existingLesson.getWeekend() == newLesson.getWeekend()
+                    && existingLesson.getDay().equalsIgnoreCase(newLesson.getDay())
+                    && existingLesson.getTime().equalsIgnoreCase(newLesson.getTime());
+
+            if (sameSlot) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void initializeSampleBookingsAndReviews() {
+        createAttendedSampleBooking("M001", "L001", 5, "Excellent class");
+        createAttendedSampleBooking("M002", "L001", 4, "Very good session");
+        createAttendedSampleBooking("M003", "L002", 5, "Enjoyed the workout");
+        createAttendedSampleBooking("M004", "L002", 3, "It was okay");
+        createAttendedSampleBooking("M005", "L003", 4, "Good instructor");
+
+        createAttendedSampleBooking("M006", "L004", 5, "Great energy");
+        createAttendedSampleBooking("M007", "L004", 4, "Nice class");
+        createAttendedSampleBooking("M008", "L005", 5, "Very useful");
+        createAttendedSampleBooking("M009", "L005", 3, "Average class");
+        createAttendedSampleBooking("M010", "L006", 4, "Good experience");
+
+        createAttendedSampleBooking("M001", "L007", 5, "Loved it");
+        createAttendedSampleBooking("M002", "L007", 4, "Good training");
+        createAttendedSampleBooking("M003", "L008", 5, "Excellent workout");
+        createAttendedSampleBooking("M004", "L008", 4, "Very satisfying");
+        createAttendedSampleBooking("M005", "L009", 3, "Okay session");
+
+        createAttendedSampleBooking("M006", "L010", 5, "Best class");
+        createAttendedSampleBooking("M007", "L010", 4, "Helpful lesson");
+        createAttendedSampleBooking("M008", "L011", 5, "Amazing class");
+        createAttendedSampleBooking("M009", "L011", 4, "Good exercise");
+        createAttendedSampleBooking("M010", "L012", 5, "Very satisfied");
     }
 
     public List<Lesson> getAvailableLessonsForChange(String bookingId) {
@@ -135,6 +245,10 @@ public class BookingController {
                     (b.getStatus() == BookingStatus.BOOKED || b.getStatus() == BookingStatus.CHANGED)) {
                 return "Error: Duplicate booking detected.";
             }
+        }
+
+        if (hasTimeConflict(member, lesson, null)) {
+            return "Error: Time conflict detected. Member already has another lesson at the same time.";
         }
 
         if (lesson.hasSpace()) {

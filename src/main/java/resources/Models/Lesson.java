@@ -6,10 +6,10 @@ import java.util.List;
 public class Lesson {
     private String id;
     private String exerciseType;
-    private int month; // e.g., 5 for May
-    private int weekend; // e.g., 1 to 4
-    private String day; // "Saturday" or "Sunday"
-    private String time; // "Morning", "Afternoon", "Evening"
+    private int month; 
+    private int weekend; 
+    private String day; 
+    private String time; 
     private double price;
     private int capacity;
     private List<Member> attendees;
@@ -28,7 +28,7 @@ public class Lesson {
         this.reviews = new ArrayList<>();
     }
 
-    // Getters
+    
     public String getId() {
         return id;
     }
@@ -61,7 +61,7 @@ public class Lesson {
         return capacity;
     }
 
-    // Status
+    
     public int getCurrentAttendeesCount() {
         return attendees.size();
     }
@@ -70,7 +70,7 @@ public class Lesson {
         return attendees.size() < capacity;
     }
 
-    // Operations
+    
     public boolean addAttendee(Member member) {
         if (hasSpace() && !attendees.contains(member)) {
             attendees.add(member);
@@ -88,6 +88,10 @@ public class Lesson {
             reviews.add(review);
         }
     }
+
+    public List<Review> getReviews() {
+    return reviews;
+}
 
     public double getAverageRating() {
         if (reviews.isEmpty())

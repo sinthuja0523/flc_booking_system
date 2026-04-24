@@ -159,7 +159,7 @@ class BookingControllerTest {
         Member d = controller.getMember("M004");
         Member e = controller.getMember("M005");
 
-        controller.bookLesson(alice, yogaSaturdayMorning); // B0001
+        controller.bookLesson(alice, yogaSaturdayMorning);
         controller.bookLesson(bob, zumbaSaturdayAfternoon);
         controller.bookLesson(c, zumbaSaturdayAfternoon);
         controller.bookLesson(d, zumbaSaturdayAfternoon);

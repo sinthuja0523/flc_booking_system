@@ -70,8 +70,6 @@ public class BookLessonPanel extends JPanel {
         filterPanel.add(day_selection);
         filterPanel.add(search_button);
 
-        // String[] columns = {"ID", "Exercise", "Day", "Time", "Price",
-        // "Availability"};
         String[] columns = { "ID", "Exercise", "Schedule", "Time", "Price", "Availability" };
 
         timetableModel = new DefaultTableModel(columns, 0) {
@@ -93,28 +91,28 @@ public class BookLessonPanel extends JPanel {
                 Component c = super.getTableCellRendererComponent(
                         table, value, isSelected, hasFocus, row, column);
 
-                // Get lesson ID from table
+                
                 String lessonId = (String) table.getValueAt(row, 0);
 
-                // Find lesson object
+                
                 Lesson lesson = system.getLessonById(lessonId);
 
                 if (lesson != null) {
-                    int week = lesson.getWeekend(); // week number (1–4)
+                    int week = lesson.getWeekend(); 
 
                     if (!isSelected) {
                         switch (week) {
                             case 1:
-                                c.setBackground(new Color(220, 235, 255)); // light blue
+                                c.setBackground(new Color(220, 235, 255)); 
                                 break;
                             case 2:
-                                c.setBackground(new Color(220, 255, 220)); // light green
+                                c.setBackground(new Color(220, 255, 220)); 
                                 break;
                             case 3:
-                                c.setBackground(new Color(255, 255, 200)); // light yellow
+                                c.setBackground(new Color(255, 255, 200)); 
                                 break;
                             case 4:
-                                c.setBackground(new Color(255, 220, 230)); // light pink
+                                c.setBackground(new Color(255, 220, 230)); 
                                 break;
                             default:
                                 c.setBackground(Color.WHITE);
